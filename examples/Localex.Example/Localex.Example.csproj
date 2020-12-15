@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\extensions\Localex.Extensions.DependencyInjection.Autofac\Localex.Extensions.DependencyInjection.Autofac.csproj" />
+      <ProjectReference Include="..\..\src\extensions\Localex.Extensions.DependencyInjection\Localex.Extensions.DependencyInjection.csproj" />
+      <ProjectReference Include="..\..\src\providers\Locales.Providers.Yaml\Locales.Providers.Yaml.csproj" />
+      <ProjectReference Include="..\..\src\providers\Localex.Providers.Json\Localex.Providers.Json.csproj" />
+      <ProjectReference Include="..\..\src\providers\Localex.Providers.Xml\Localex.Providers.Xml.csproj" />
+      <ProjectReference Include="..\..\src\providers\Localex.Providers.Yaml\Localex.Providers.Yaml.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="english.json" />
+      <None Remove="russian.yml" />
+      <None Remove="polish.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="english.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="polish.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="russian.yml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    </ItemGroup>
+
+</Project>

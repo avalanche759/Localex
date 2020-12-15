@@ -1,0 +1,9 @@
+﻿{
+  "StartupMessage": "Hello. Please fill simple form:",
+  "Greeting" : "Name: {Name?case=upper}; Age: {Age}.",
+  "Questions": {
+    "Name" : "What's your name?",
+    "Age" : "{Name}, how old are you?"
+  },
+  "QuitMessage": "Press any key to close the application..."
+}

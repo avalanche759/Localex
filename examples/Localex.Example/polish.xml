@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <StartupMessage>Witam. Proszę wypełnić prosty formularz:</StartupMessage>
+    <Greeting>Imię: {Name?case=upper}; Wiek: {Age}.</Greeting>
+    <Questions>
+        <Age>{Name}, ile masz lat?</Age>
+        <Name>Jak masz na imię?</Name>
+    </Questions>
+    <QuitMessage>Naciśnij dowolny klawisz, aby zamknąć aplikację...</QuitMessage>
+</root>
