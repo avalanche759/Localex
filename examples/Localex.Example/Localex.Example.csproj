@@ -1,18 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\extensions\Localex.Extensions.DependencyInjection.Autofac\Localex.Extensions.DependencyInjection.Autofac.csproj" />
-      <ProjectReference Include="..\..\src\extensions\Localex.Extensions.DependencyInjection\Localex.Extensions.DependencyInjection.csproj" />
-      <ProjectReference Include="..\..\src\providers\Locales.Providers.Yaml\Locales.Providers.Yaml.csproj" />
-      <ProjectReference Include="..\..\src\providers\Localex.Providers.Json\Localex.Providers.Json.csproj" />
-      <ProjectReference Include="..\..\src\providers\Localex.Providers.Xml\Localex.Providers.Xml.csproj" />
-      <ProjectReference Include="..\..\src\providers\Localex.Providers.Yaml\Localex.Providers.Yaml.csproj" />
+        <ProjectReference Include="..\..\src\extensions\Localex.Extensions.DependencyInjection.Autofac\Localex.Extensions.DependencyInjection.Autofac.csproj" />
+        <ProjectReference Include="..\..\src\extensions\Localex.Extensions.DependencyInjection\Localex.Extensions.DependencyInjection.csproj" />
+        <ProjectReference Include="..\..\src\Localex.Abstractions\Localex.Abstractions.csproj" />
+        <ProjectReference Include="..\..\src\Localex\Localex.csproj" />
+        <ProjectReference Include="..\..\src\providers\Localex.Providers.File\Localex.Providers.File.csproj" />
+        <ProjectReference Include="..\..\src\providers\Localex.Providers.Json\Localex.Providers.Json.csproj" />
+        <ProjectReference Include="..\..\src\providers\Localex.Providers.Xml\Localex.Providers.Xml.csproj" />
+        <ProjectReference Include="..\..\src\providers\Localex.Providers.Yaml\Localex.Providers.Yaml.csproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
       <None Remove="english.json" />
       <None Remove="russian.yml" />
@@ -34,5 +37,7 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     </ItemGroup>
+
+    
 
 </Project>
