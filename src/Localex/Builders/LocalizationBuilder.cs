@@ -96,6 +96,8 @@ namespace Localex.Builders
                             LanguageCulture,
                             existing.Id, existing.Template,
                             nodeToAdd.GetChildNodes().Concat(existing.GetChildNodes()));
+
+                        nodesToAdd.Remove(existing);
                         
                         nodesToAdd.Add(combinedNode);
                     }
