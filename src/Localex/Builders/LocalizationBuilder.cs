@@ -88,13 +88,18 @@ namespace Localex.Builders
 
                 foreach (var nodeToAdd in inlineNodes)
                 {
-                    if (nodesToAdd.Any(node => node.Id.Equals(nodeToAdd.Id)))
-                    {
-                        throw new LocalexLocalizationBuilderException(
-                            $"Localization node with specified identifier ({nodeToAdd.Id}) already exists.");
-                    }
+                    var existing = nodesToAdd.FirstOrDefault(node => node.Id.Equals(nodeToAdd.Id));
 
-                    nodesToAdd.Add(nodeToAdd);
+                    if (existing != null)
+                    {
+                        ILocalizationNode combinedNode = new LocalizationNode(
+                            LanguageCulture,
+                            existing.Id, existing.Template,
+                            nodeToAdd.GetChildNodes().Concat(existing.GetChildNodes()));
+                        
+                        nodesToAdd.Add(combinedNode);
+                    }
+                    else nodesToAdd.Add(nodeToAdd);
                 }
             }
 
