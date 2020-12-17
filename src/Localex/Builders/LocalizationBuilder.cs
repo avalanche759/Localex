@@ -76,16 +76,17 @@ namespace Localex.Builders
                 string[] baseNodesPathSegments = path.Split(':',
                     StringSplitOptions.RemoveEmptyEntries);
 
-                ICollection<ILocalizationNode> inlineNodes = new Collection<ILocalizationNode>();
+                IList<ILocalizationNode> inlineNodes = localizationNodes[baseNodesPath];
 
                 foreach (string segment in baseNodesPathSegments.Reverse())
                 {
-                    ILocalizationNode newChildNode = new LocalizationNode(LanguageCulture, segment, null, inlineNodes);
-                    inlineNodes.Clear();
+                    ILocalizationNode newChildNode = new LocalizationNode(LanguageCulture, segment, null,
+                        new Collection<ILocalizationNode>(inlineNodes));
+                    inlineNodes = new List<ILocalizationNode>();
                     inlineNodes.Add(newChildNode);
                 }
 
-                foreach (var nodeToAdd in localizationNodes[baseNodesPath ?? ""])
+                foreach (var nodeToAdd in inlineNodes)
                 {
                     if (nodesToAdd.Any(node => node.Id.Equals(nodeToAdd.Id)))
                     {
