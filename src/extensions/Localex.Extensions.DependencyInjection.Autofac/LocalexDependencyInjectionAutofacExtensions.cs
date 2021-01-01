@@ -28,7 +28,7 @@ namespace Localex.Extensions.DependencyInjection.Autofac
             parameter => parameter.Name.Equals(LocalizationPathParameterName);
 
         public static ContainerBuilder RegisterLocalization(this ContainerBuilder containerBuilder,
-            Action<ILocalizationEngineBuilder> configureLocalizationEngine)
+            Action<IComponentContext, ILocalizationEngineBuilder> configureLocalizationEngine)
         {
             if (configureLocalizationEngine is null)
             {
@@ -36,14 +36,18 @@ namespace Localex.Extensions.DependencyInjection.Autofac
                     "Localization engine configurator isn't valid (null-equal). Please specify a valid configurator function.");
             }
 
-            ILocalizationEngineBuilder localizationEngineBuilder = new LocalizationEngineBuilder();
 
-            configureLocalizationEngine(localizationEngineBuilder);
+            containerBuilder.Register(componentContext =>
+                {
+                    ILocalizationEngineBuilder localizationEngineBuilder = new LocalizationEngineBuilder();
 
-            ILocalizationEngine localizationEngine = localizationEngineBuilder.Build();
+                    configureLocalizationEngine(componentContext, localizationEngineBuilder);
 
-            containerBuilder.RegisterInstance(localizationEngine)
-                .As<ILocalizationEngine>();
+                    ILocalizationEngine localizationEngine = localizationEngineBuilder.Build();
+
+                    return localizationEngine;
+                })
+                .As<ILocalizationEngine>().SingleInstance();
 
             containerBuilder.RegisterAdapter<ILocalizationEngine, ILocalization>((context, engine) =>
             {
@@ -63,7 +67,7 @@ namespace Localex.Extensions.DependencyInjection.Autofac
             {
                 var namedParameters = context.GetParameters<NamedParameter>();
 
-                var localization = context.Resolve<ILocalization>(namedParameters);
+                var localization = context.ResolveOptional<ILocalization>(namedParameters);
 
                 if (namedParameters.FirstOrDefault(LocalizationPathParameterPredicate) is
                         NamedParameter nodePathParameter &&
@@ -81,7 +85,8 @@ namespace Localex.Extensions.DependencyInjection.Autofac
         public static ILocalization ResolveLocalization(this IContainer container,
             CultureInfo languageCulture)
         {
-            return container.Resolve<ILocalization>(new NamedParameter(LanguageCultureParameterName, languageCulture));
+            return container.ResolveOptional<ILocalization>(new NamedParameter(LanguageCultureParameterName,
+                languageCulture));
         }
 
         public static ILocalizationNode ResolveLocalizationNode(this IContainer container,

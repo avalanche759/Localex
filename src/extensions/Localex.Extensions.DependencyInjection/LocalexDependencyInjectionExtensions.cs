@@ -14,7 +14,7 @@ namespace Localex.Extensions.DependencyInjection
     public static class LocalexDependencyInjectionExtensions
     {
         public static IServiceCollection AddLocalization(this IServiceCollection serviceCollection,
-            Action<ILocalizationEngineBuilder> configureLocalizationEngine)
+            Action<IServiceProvider, ILocalizationEngineBuilder> configureLocalizationEngine)
         {
             ILocalizationEngineBuilder localizationEngineBuilder = new LocalizationEngineBuilder();
 
@@ -24,11 +24,14 @@ namespace Localex.Extensions.DependencyInjection
                     "Localization engine configurator isn't valid (null-equal). Please specify a valid configurator function.");
             }
 
-            configureLocalizationEngine(localizationEngineBuilder);
+            return serviceCollection.AddSingleton<ILocalizationEngine>(provider =>
+            {
+                configureLocalizationEngine(provider, localizationEngineBuilder);
 
-            ILocalizationEngine localizationEngine = localizationEngineBuilder.Build();
+                ILocalizationEngine localizationEngine = localizationEngineBuilder.Build();
 
-            return serviceCollection.AddSingleton<ILocalizationEngine>(localizationEngine);
+                return localizationEngine;
+            });
         }
     }
 }

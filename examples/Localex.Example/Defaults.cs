@@ -1,6 +1,8 @@
 ﻿#region
 
+using System;
 using System.Globalization;
+using Autofac;
 using Localex.Abstractions.Builders;
 using Localex.Providers.Json;
 using Localex.Providers.Xml;
@@ -12,6 +14,12 @@ namespace Localex.Example
 {
     public static class Defaults
     {
+        public static void ConfigureLocalizationEngine(IServiceProvider _, ILocalizationEngineBuilder localizationEngineBuilder)
+            => ConfigureLocalizationEngine(localizationEngineBuilder);
+        
+        public static void ConfigureLocalizationEngine(IComponentContext _, ILocalizationEngineBuilder localizationEngineBuilder)
+            => ConfigureLocalizationEngine(localizationEngineBuilder);
+
         public static void ConfigureLocalizationEngine(ILocalizationEngineBuilder localizationEngineBuilder)
         {
             localizationEngineBuilder
